@@ -1,0 +1,1 @@
+function cardWeather(pronosticName, date) {}

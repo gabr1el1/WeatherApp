@@ -1,0 +1,70 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.content > .cards {
+  gap: 5px;
+  height: 700px;
+  overflow-y: scroll;
+  padding: 5px;
+  border: thin solid black;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow-y: scroll;
+  background: lightgray;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.card .chart {
+  height: 200px;
+}
+
+.search-weather {
+  display: flex;
+}
+.search-weather input[type="text"] {
+  flex: 8;
+  font-size: 1.3rem;
+  padding: 5px;
+}
+.search-weather input[type="number"] {
+  flex: 1;
+}
+.search-weather button {
+  flex: 1;
+}
