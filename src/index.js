@@ -1,3 +1,3 @@
-import { WeatherApp } from "./DOM.js";
+import { WeatherApp } from "./App.js";
 import "./css/styles.css";
-WeatherApp();
+let WA = WeatherApp();

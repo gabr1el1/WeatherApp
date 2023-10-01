@@ -3,11 +3,14 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+:root {
+  --main-color: rgb(189, 205, 221);
+}
 body,
 html {
   min-width: 100vw;
   min-height: 100vh;
+  user-select: none;
 }
 
 body {
@@ -15,6 +18,8 @@ body {
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background: floralwhite;
 }
 
 header {
@@ -31,40 +36,104 @@ header {
   gap: 10px;
 }
 
-.content > .cards {
-  gap: 5px;
-  height: 700px;
-  overflow-y: scroll;
-  padding: 5px;
-  border: thin solid black;
-}
-
-.card {
+.cards {
   display: flex;
   flex-direction: column;
-  height: 300px;
-  overflow-y: scroll;
-  background: lightgray;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 5px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  height: 0px;
+  border-radius: 5px;
+  gap: 5px;
 }
 
-.card .chart {
+#bar-days {
+  background: lightgray;
+  flex: 1;
+  border-radius: 5px;
+  display: flex;
+  gap: 5px;
+}
+
+#bar-days > .weather-day {
+  border-radius: 5px;
+  padding: 3px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightgray;
+  color: white;
+}
+
+#bar-days > .weather-day:hover {
+  background: var(--main-color);
+  transition: all 0.5s ease;
+}
+
+#bar-days > .weather-day.selected-day {
+  background: var(--main-color);
+  transition: all 0.5s ease;
+}
+
+#card-content {
+  flex: 9;
+  background: lightgray;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-options {
+  flex: 1;
+}
+
+.option-content {
+  flex: 9;
+}
+
+.chart {
   height: 200px;
 }
 
 .search-weather {
   display: flex;
+  gap: 5px;
 }
 .search-weather input[type="text"] {
   flex: 8;
   font-size: 1.3rem;
   padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background: lightgrey;
+  transition: all 0.5s ease;
+  outline: none;
 }
-.search-weather input[type="number"] {
-  flex: 1;
+.search-weather input[type="text"]:hover {
+  background-color: var(--main-color);
 }
+
 .search-weather button {
   flex: 1;
+  border-radius: 5px;
+  background: lightgrey;
+  transition: all 0.5s ease;
+  border: none;
+}
+
+.search-weather button:hover {
+  background: var(--main-color);
+}
+#progress-bar {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  background-color: transparent;
+}
+
+#waiting-icon {
+  font-size: 20vw;
+  text-align: center;
 }

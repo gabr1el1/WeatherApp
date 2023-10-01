@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
     <script src="main.js" defer></script>
+    <script src="https://kit.fontawesome.com/392bca4d30.js" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="styles.css"> -->
 </head>
 
 <body>
+
     <header>
-        <h1>Weather app</h1>
+
+        <h1>&#9925;WeatherApp</h1>
         <div>
             <label for="temp-grades">Celcius</label>
             <input type="checkbox" name="" id="temp-grades" checked>
@@ -21,70 +24,20 @@
     <div class="content">
         <div class="search-weather">
             <input type="text" placeholder="Search for a location">
-            <button>Search</button>
+            <button id="btnUserLoc" title="Get weather forecast for your location"><i
+                    class="fa-solid fa-location-dot"></i></button>
+            <button id="btnSearchLoc"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div class="cards">
-            <div class="card">
-                <div class="section-weather">
-                    <h2>Chance of rain</h2>
-                    <canvas class="chart-rain chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Temperature</h2>
-                    <canvas class="chart-temperature chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Wind</h2>
-                    <canvas class="chart-wind chart"></canvas>
-                </div>
+            <div id="bar-days"></div>
+            <div id="card-content">
+                <span id="waiting-icon">&#9925;...</span>
             </div>
-            <div class="card">
-                <div class="section-weather">
-                    <h2>Chance of rain</h2>
-                    <canvas class="chart-rain chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Temperature</h2>
-                    <canvas class="chart-temperature chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Wind</h2>
-                    <canvas class="chart-wind chart"></canvas>
-                </div>
-            </div>
-            <div class="card">
-                <div class="section-weather">
-                    <h2>Chance of rain</h2>
-                    <canvas class="chart-rain chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Temperature</h2>
-                    <canvas class="chart-temperature chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Wind</h2>
-                    <canvas class="chart-wind chart"></canvas>
-                </div>
-            </div>
-            <div class="card">
-                <div class="section-weather">
-                    <h2>Chance of rain</h2>
-                    <canvas class="chart-rain chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Temperature</h2>
-                    <canvas class="chart-temperature chart"></canvas>
-                </div>
-                <div class="section-weather">
-                    <h2>Wind</h2>
-                    <canvas class="chart-wind chart"></canvas>
-                </div>
-            </div>
+
         </div>
-    </div>
-    <footer>
-        By GBRLHZ (gabr1el1)
-    </footer>
+        <footer>
+            By GBRLHZ (gabr1el1)
+        </footer>
 </body>
 
 </html>
