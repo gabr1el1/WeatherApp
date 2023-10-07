@@ -5,6 +5,7 @@
 }
 :root {
   --main-color: rgb(189, 205, 221);
+  --option-color: rgb(120, 182, 245);
 }
 body,
 html {
@@ -71,7 +72,7 @@ header {
 }
 
 #bar-days > .weather-day.selected-day {
-  background: var(--main-color);
+  background: var(--option-color);
   transition: all 0.5s ease;
 }
 
@@ -83,12 +84,38 @@ header {
   flex-direction: column;
 }
 
-.bar-options {
+#bar-options {
   flex: 1;
+  display: flex;
 }
 
-.option-content {
+#general-opt,
+#detail-opt {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--main-color);
+  transition: all 0.5s ease;
+  color: white;
+}
+
+#general-opt {
+  border-radius: 5px 0 0 0;
+}
+
+#detail-opt {
+  border-radius: 0 5px 0 0;
+}
+
+#general-opt.active,
+#detail-opt.active {
+  background: var(--option-color);
+}
+
+#option-content {
   flex: 9;
+  display: flex;
 }
 
 .chart {
@@ -136,4 +163,17 @@ header {
 #waiting-icon {
   font-size: 20vw;
   text-align: center;
+}
+table {
+  flex: 1;
+}
+table tr {
+  display: flex;
+}
+
+table tr th {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -78,7 +78,23 @@ function WeatherApp() {
     barDays.innerHTML = "";
 
     data.forecast.forecastday.forEach(function (dayData, index) {
-      let cardDay = Card(dayData);
+      let depuratedDay = {};
+      if (index == 0) {
+        depuratedDay = {
+          astro: dayData.astro,
+          day: dayData.day,
+          hour: dayData.hour.slice(hour),
+        };
+      } else {
+        depuratedDay = {
+          astro: dayData.astro,
+          day: dayData.day,
+          hour: dayData.hour,
+        };
+      }
+
+      let cardDay = Card(depuratedDay);
+      console.log(depuratedDay);
       let day = document.createElement("div");
       day.classList.add("weather-day");
       day.innerText = format(parseISO(dayData.date), "PP");
@@ -104,20 +120,47 @@ function WeatherApp() {
 
 function Card(dayData) {
   let content = document.querySelector("#card-content");
-
+  let optionContent;
+  let activeOption = 0;
   function addContent() {
     content.innerHTML = "";
     let barOptions = document.createElement("div");
-    barOptions.classList.add("bar-options");
+    barOptions.id = "bar-options";
 
     let generalOpt = document.createElement("div");
-    generalOpt.classList.add("general-opt");
+    generalOpt.id = "general-opt";
+    generalOpt.innerText = "General forecast";
 
-    let hoursOpt = document.createElement("div");
-    hoursOpt.classList.add("hours-opt");
+    let detailOpt = document.createElement("div");
+    detailOpt.id = "detail-opt";
+    detailOpt.innerText = "Details";
 
-    let optionContent = document.createElement("div");
-    optionContent.classList.add("option-content");
+    optionContent = document.createElement("div");
+    optionContent.id = "option-content";
+    if (activeOption == 0) {
+      generalOpt.classList.add("active");
+      addGeneral();
+    } else {
+      detailOpt.classList.add("active");
+      addDetail();
+    }
+
+    generalOpt.addEventListener("click", function () {
+      generalOpt.classList.add("active");
+      detailOpt.classList.remove("active");
+      activeOption = 0;
+      addGeneral();
+    });
+
+    detailOpt.addEventListener("click", function () {
+      detailOpt.classList.add("active");
+      generalOpt.classList.remove("active");
+      activeOption = 1;
+      addDetail();
+    });
+
+    barOptions.append(generalOpt);
+    barOptions.append(detailOpt);
 
     content.append(barOptions);
     content.append(optionContent);
@@ -125,9 +168,31 @@ function Card(dayData) {
     //content.innerHTML = "";
   }
 
-  function addGeneral() {}
+  function addGeneral() {
+    optionContent.innerHTML = "";
+  }
 
-  function addHours() {}
+  function addDetail() {
+    optionContent.innerHTML = "";
+    let table = document.createElement("table");
+    let tblHeader = document.createElement("tr");
+    tblHeader.innerHTML = `<th>Hour</th><th>Condition</th><th>Chance of rain</th><th>Temperature</th>`;
+    table.append(tblHeader);
+
+    let html = "";
+    dayData.hour.forEach(function (hour) {
+      html += `<tr>
+      <th>${new Date(hour.time).getHours()}</th>
+      <th><image src="${hour.condition.icon}"></th>
+      <th>${hour.chance_of_rain}</th>
+      <th>${hour.temp_c}</th>
+      </tr>`;
+    });
+
+    table.innerHTML = table.innerHTML + html;
+
+    optionContent.append(table);
+  }
 
   return { addContent };
 }
