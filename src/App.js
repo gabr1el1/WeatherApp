@@ -170,10 +170,58 @@ function Card(dayData) {
 
   function addGeneral() {
     optionContent.innerHTML = "";
+    optionContent.className = "general";
+
+    let generalCondition = document.createElement("div");
+    generalCondition.id = "condition-tile";
+    let generalAstro = document.createElement("div");
+    generalAstro.id = "astro-tile";
+    let generalTemperature = document.createElement("div");
+    generalTemperature.id = "temperature-tile";
+    let generalRain = document.createElement("div");
+    generalRain.id = "rain-tile";
+
+    generalCondition.innerHTML = `
+    <h2>Condition</h2>
+    ${dayData.day.condition.text}
+    <img src="${dayData.day.condition.icon}">
+    `;
+
+    generalAstro.innerHTML = `
+    <h2>Astro <i class="fa-solid fa-sun"></i></h2>
+    <h3>Sunrise</h3>
+    <p>Sunrise ${dayData.astro.sunrise}</p>
+    <h3>Sunset</h3>
+    <p>Sunset ${dayData.astro.sunset}</p>
+    `;
+
+    generalTemperature.innerHTML = `
+    <h2>Temperature <i class="fa-solid fa-temperature-three-quarters"></i></h2>
+    <h3>Average</h3>
+    <p>${dayData.day.avgtemp_c} °C</p>
+    <h3>Maximum</h3>
+    <p>${dayData.day.maxtemp_c} °C</p>
+    <h3>Minimum</h3>
+    <p>${dayData.day.mintemp_c} °C</p>
+    `;
+
+    generalRain.innerHTML = `
+    <h2>Rain <i class="fa-solid fa-cloud-rain"></i></h2>
+    <h3>Chance of rain</h3>
+    <p>${dayData.day.daily_chance_of_rain} %</p>
+    <h3>Precipitaion</h3>
+    <p>${dayData.day.totalprecip_mm} mm</p>
+    `;
+
+    optionContent.append(generalCondition);
+    optionContent.append(generalAstro);
+    optionContent.append(generalTemperature);
+    optionContent.append(generalRain);
   }
 
   function addDetail() {
     optionContent.innerHTML = "";
+    optionContent.className = "detail";
     let table = document.createElement("table");
     let tblHeader = document.createElement("tr");
     tblHeader.innerHTML = `<th>Hour</th><th>Condition</th><th>Chance of rain</th><th>Temperature</th>`;
@@ -183,7 +231,7 @@ function Card(dayData) {
     dayData.hour.forEach(function (hour) {
       html += `<tr>
       <th>${new Date(hour.time).getHours()}</th>
-      <th><image src="${hour.condition.icon}"></th>
+      <th><img src="${hour.condition.icon}"></th>
       <th>${hour.chance_of_rain}</th>
       <th>${hour.temp_c}</th>
       </tr>`;
