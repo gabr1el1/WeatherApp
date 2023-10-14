@@ -1,6 +1,6 @@
 # WeatherApp
 
-This app puts into gives you forecast of the weather
+This app gives you forecast of the weather
 up to three days for your location or one entered by
 the user in the search bar.
 
