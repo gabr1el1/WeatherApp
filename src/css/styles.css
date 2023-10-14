@@ -30,6 +30,40 @@ header {
   align-items: center;
 }
 
+.switch-body {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.switch {
+  background: lightgray;
+  flex: 1;
+  max-width: 50px;
+  min-width: 50px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.switch-toggle {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 100%;
+  background: slateblue;
+  transition: all 0.3s ease;
+  left: 0;
+}
+
+.switch-toggle.active {
+  background: greenyellow;
+  left: 70%;
+}
+
 .content {
   display: flex;
   flex-direction: column;

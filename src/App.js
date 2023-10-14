@@ -1,17 +1,42 @@
-import { da } from "date-fns/locale";
 import { getWeather } from "./weather.js";
-import { add, format, parse, parseISO } from "date-fns";
+import { format, parseISO, set } from "date-fns";
 function WeatherApp() {
-  let data, hour, latitude, longitude, activeCard;
+  let data,
+    hour,
+    latitude,
+    longitude,
+    tmZn,
+    activeCard,
+    tempUnits,
+    cardsDays = [];
   //DOM
+  let hourTag = document.querySelector(".hour");
   let locationInput = document.querySelector("input[type='text']");
   let searchBtn = document.querySelector("#btnSearchLoc");
   let userLocBtn = document.querySelector("#btnUserLoc");
+  let swtchToggle = document.querySelector(".switch-toggle");
+  let swtch = document.querySelector(".switch");
+
+  swtchToggle.addEventListener("click", changeUnits);
+  swtch.addEventListener("click", changeUnits.bind(swtchToggle));
+  function changeUnits(e) {
+    if (this.classList.contains("active")) {
+      this.classList.remove("active");
+      tempUnits = "F";
+    } else {
+      this.classList.add("active");
+      tempUnits = "C";
+    }
+
+    refreshGraphics();
+    e.stopPropagation();
+    //console.log(this);
+  }
 
   searchBtn.addEventListener("click", async function () {
     data = await requestWeather(locationInput.value);
     hour = new Date(data.location.localtime).getHours();
-    displayGraphics(data);
+    displayGraphics();
 
     console.log(data);
     console.log(hour);
@@ -21,7 +46,7 @@ function WeatherApp() {
     if (e.key == "Enter") {
       data = await requestWeather(locationInput.value);
       hour = new Date(data.location.localtime).getHours();
-      displayGraphics(data);
+      displayGraphics();
 
       console.log(data);
       console.log(hour);
@@ -66,17 +91,18 @@ function WeatherApp() {
   async function requestWeather(location) {
     try {
       data = await getWeather(location, 3);
+      tmZn = data.location.tz_id;
       return data;
     } catch (error) {
       alert(error.message);
     }
   }
 
-  function displayGraphics(data) {
+  function displayGraphics() {
     let barDays = document.querySelector("#bar-days");
     barDays.style.backgroundColor = "transparent";
     barDays.innerHTML = "";
-
+    cardsDays = [];
     data.forecast.forecastday.forEach(function (dayData, index) {
       let depuratedDay = {};
       if (index == 0) {
@@ -93,7 +119,7 @@ function WeatherApp() {
         };
       }
 
-      let cardDay = Card(depuratedDay);
+      cardsDays.push(Card(depuratedDay, tempUnits));
       console.log(depuratedDay);
       let day = document.createElement("div");
       day.classList.add("weather-day");
@@ -101,7 +127,7 @@ function WeatherApp() {
       if (index == 0) {
         day.classList.add("selected-day");
         activeCard = 0;
-        cardDay.addContent();
+        cardsDays[activeCard].addContent(tempUnits);
       }
       day.addEventListener("click", function () {
         Array.from(document.querySelectorAll(".weather-day"))[
@@ -109,20 +135,35 @@ function WeatherApp() {
         ].classList.remove("selected-day");
         day.classList.add("selected-day");
         activeCard = index;
-        cardDay.addContent();
+        cardsDays[activeCard].addContent(tempUnits);
       });
       barDays.append(day);
     });
   }
 
+  function refreshGraphics() {
+    cardsDays[activeCard].addContent(tempUnits);
+  }
+
+  setInterval(function () {
+    let d = new Date();
+    hourTag.innerText = `${d.toLocaleString("en-US", {
+      timeZone: tmZn,
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    })}`;
+  }, 1000);
   weatherByLocation();
 }
 
 function Card(dayData) {
   let content = document.querySelector("#card-content");
   let optionContent;
-  let activeOption = 0;
-  function addContent() {
+  let activeOption = 1;
+  let units;
+  function addContent(tempUnits) {
+    units = tempUnits;
     content.innerHTML = "";
     let barOptions = document.createElement("div");
     barOptions.id = "bar-options";
@@ -194,16 +235,28 @@ function Card(dayData) {
     <h3>Sunset</h3>
     <p>Sunset ${dayData.astro.sunset}</p>
     `;
-
-    generalTemperature.innerHTML = `
+    let genTempHtml = `
     <h2>Temperature <i class="fa-solid fa-temperature-three-quarters"></i></h2>
-    <h3>Average</h3>
-    <p>${dayData.day.avgtemp_c} °C</p>
-    <h3>Maximum</h3>
-    <p>${dayData.day.maxtemp_c} °C</p>
-    <h3>Minimum</h3>
-    <p>${dayData.day.mintemp_c} °C</p>
-    `;
+    <h3>Average</h3>`;
+    if (units == "C") {
+      genTempHtml += `
+      <p>${dayData.day.avgtemp_c} °C</p>
+      <h3>Maximum</h3>
+      <p>${dayData.day.maxtemp_c} °C</p>
+      <h3>Minimum</h3>
+      <p>${dayData.day.mintemp_c} °C</p>
+      `;
+    } else {
+      genTempHtml += `
+      <p>${dayData.day.avgtemp_f} °F</p>
+      <h3>Maximum</h3>
+      <p>${dayData.day.maxtemp_f} °F</p>
+      <h3>Minimum</h3>
+      <p>${dayData.day.mintemp_f} °F</p>
+      `;
+    }
+
+    generalTemperature.innerHTML = genTempHtml;
 
     generalRain.innerHTML = `
     <h2>Rain <i class="fa-solid fa-cloud-rain"></i></h2>
@@ -232,9 +285,19 @@ function Card(dayData) {
       html += `<tr>
       <th>${new Date(hour.time).getHours()}</th>
       <th><img src="${hour.condition.icon}"></th>
-      <th>${hour.chance_of_rain}</th>
-      <th>${hour.temp_c}</th>
-      </tr>`;
+      <th>${hour.chance_of_rain} %</th>`;
+
+      if (units == "C") {
+        html += `
+        <th>${hour.temp_c} °C</th>
+        </tr>
+        `;
+      } else {
+        html += `
+        <th>${hour.temp_f} °F</th>
+        </tr>
+        `;
+      }
     });
 
     table.innerHTML = table.innerHTML + html;
