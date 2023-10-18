@@ -1,5 +1,5 @@
 async function getWeather(location) {
-  let queryString = `http://api.weatherapi.com/v1/forecast.json?key=22c4f6abe3d941769c6155133230608&q=${location}&days=3/`;
+  let queryString = `https://api.weatherapi.com/v1/forecast.json?key=22c4f6abe3d941769c6155133230608&q=${location}&days=3/`;
   try {
     let response = await fetch(queryString, { mode: "cors" });
     if (response.status == 200) {
