@@ -6,6 +6,8 @@ function WeatherApp() {
     latitude,
     longitude,
     tmZn,
+    hourWeatherText,
+    hourWeatherIcon,
     activeCard,
     tempUnits,
     cardsDays = [];
@@ -111,6 +113,9 @@ function WeatherApp() {
           day: dayData.day,
           hour: dayData.hour.slice(hour),
         };
+        hourWeatherText = depuratedDay.hour[0].condition.text;
+        hourWeatherIcon = depuratedDay.hour[0].condition.icon;
+        console.log(hourWeatherText);
       } else {
         depuratedDay = {
           astro: dayData.astro,
@@ -119,7 +124,7 @@ function WeatherApp() {
         };
       }
 
-      cardsDays.push(Card(depuratedDay, tempUnits));
+      cardsDays.push(Card(depuratedDay));
       console.log(depuratedDay);
       let day = document.createElement("div");
       day.classList.add("weather-day");
@@ -128,6 +133,7 @@ function WeatherApp() {
         day.classList.add("selected-day");
         activeCard = 0;
         cardsDays[activeCard].addContent(tempUnits);
+        changeBackground();
       }
       day.addEventListener("click", function () {
         Array.from(document.querySelectorAll(".weather-day"))[
@@ -136,6 +142,7 @@ function WeatherApp() {
         day.classList.add("selected-day");
         activeCard = index;
         cardsDays[activeCard].addContent(tempUnits);
+        changeBackground();
       });
       barDays.append(day);
     });
@@ -145,14 +152,54 @@ function WeatherApp() {
     cardsDays[activeCard].addContent(tempUnits);
   }
 
+  function changeBackground() {
+    /*
+TODO: ADD MORE weather conditions
+*/
+    if (hourWeatherText == "Partly cloudy") {
+      document.body.className = "partly-cloudy";
+    } else if (hourWeatherText == "Sunny") {
+      document.body.className = "sunny";
+    } else if (hourWeatherText == "Overcast") {
+      document.body.className = "overcast";
+    } else if (hourWeatherText == "Clear") {
+      document.body.className = "clear";
+    } else if (hourWeatherText == "Patchy rain possible") {
+      document.body.className = "patchy-rain-possible";
+    } else if (hourWeatherText == "Cloudy") {
+      document.body.className = "cloudy";
+    }
+    document.querySelector("#icon-weather").src = hourWeatherIcon;
+  }
+
   setInterval(function () {
     let d = new Date();
-    hourTag.innerText = `${d.toLocaleString("en-US", {
+    let timeLocale = `${d.toLocaleString("en-US", {
       timeZone: tmZn,
       hour: "numeric",
       minute: "numeric",
       second: "numeric",
     })}`;
+    let timeParts = timeLocale.split(":").map(function (hourPart) {
+      return parseInt(hourPart);
+    });
+
+    let hourLocale = timeParts[0];
+    let minuteLocale = timeParts[1];
+    let secondLocale = timeParts[2];
+
+    if (minuteLocale == 0 && secondLocale == 0) {
+      cardsDays[0].dayData.hour = cardsDays[0].dayData.hour.slice(1);
+      hourWeatherText = cardsDays[activeCard];
+      refreshGraphics();
+      changeBackground();
+    }
+
+    if (hourLocale == 23 && minuteLocale == 59 && secondLocale == 59) {
+      requestWeather();
+    }
+    hourTag.innerText = timeLocale;
+    console.log(`${minuteLocale} : ${secondLocale}`);
   }, 1000);
   weatherByLocation();
 }
@@ -305,7 +352,7 @@ function Card(dayData) {
     optionContent.append(table);
   }
 
-  return { addContent };
+  return { addContent, dayData };
 }
 
 export { WeatherApp };

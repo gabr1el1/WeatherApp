@@ -23,6 +23,23 @@ body {
   background: floralwhite;
 }
 
+body.overcast {
+  background: grey;
+}
+
+body.sunny {
+  background: orange;
+}
+body.partly-cloudy {
+  background: lightsteelblue;
+}
+body.cloudy {
+  background: lightblue;
+}
+
+/*
+TODO: add more classes for more conditions
+*/
 header {
   position: relative;
   display: flex;
