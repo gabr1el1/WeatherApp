@@ -21,20 +21,26 @@ body {
   padding: 20px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   background: floralwhite;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body.overcast {
-  background: grey;
+  background-image: url(../images/overcast.webp);
 }
 
 body.sunny {
-  background: orange;
+  background-image: url(../images/sunny.webp);
 }
 body.partly-cloudy {
   background: lightsteelblue;
 }
 body.cloudy {
-  background: lightblue;
+  background-image: url(../images/cloudy.jpg);
+}
+
+body.patchy-rain-possible {
+  background-image: url(../images/patcy-rain.jpeg);
 }
 
 /*
@@ -45,6 +51,15 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+header h1 {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .switch-body {
@@ -251,9 +266,21 @@ table tr {
   display: flex;
 }
 
+table th {
+  width: 100px;
+}
+
+table thead th {
+  padding-bottom: 10px;
+  background: grey;
+  color: white;
+}
+
 table tr th {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  border-bottom: medium solid white;
 }

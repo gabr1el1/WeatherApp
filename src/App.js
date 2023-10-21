@@ -1,5 +1,11 @@
 import { getWeather } from "./weather.js";
 import { format, parseISO, set } from "date-fns";
+/*
+TODO: 
+ADD MORE weather conditions
+PUT LOADING IMAGE before data shows     
+*/
+
 function WeatherApp() {
   let data,
     hour,
@@ -10,6 +16,12 @@ function WeatherApp() {
     hourWeatherIcon,
     activeCard,
     tempUnits,
+    sunriseStr,
+    hourSunrise,
+    minuteSunrise,
+    sunsetStr,
+    hourSunset,
+    minuteSunset,
     cardsDays = [];
   //DOM
   let hourTag = document.querySelector(".hour");
@@ -94,6 +106,15 @@ function WeatherApp() {
     try {
       data = await getWeather(location, 3);
       tmZn = data.location.tz_id;
+      sunriseStr = data.forecast.forecastday[0].astro.sunrise.split(":");
+      hourSunrise = parseInt(sunriseStr[0]);
+      minuteSunrise = parseInt(sunriseStr[1]);
+      sunsetStr = data.forecast.forecastday[0].astro.sunset.split(":");
+      hourSunset = parseInt(sunsetStr[0]);
+      minuteSunset = parseInt(sunsetStr[1]);
+
+      console.log(`sunrise ${hourSunrise} : ${minuteSunrise}`);
+      console.log(`sunset ${hourSunset} : ${minuteSunset}`);
       return data;
     } catch (error) {
       alert(error.message);
@@ -153,9 +174,6 @@ function WeatherApp() {
   }
 
   function changeBackground() {
-    /*
-TODO: ADD MORE weather conditions
-*/
     if (hourWeatherText == "Partly cloudy") {
       document.body.className = "partly-cloudy";
     } else if (hourWeatherText == "Sunny") {
@@ -199,7 +217,7 @@ TODO: ADD MORE weather conditions
       requestWeather();
     }
     hourTag.innerText = timeLocale;
-    console.log(`${minuteLocale} : ${secondLocale}`);
+    //console.log(`${minuteLocale} : ${secondLocale}`);
   }, 1000);
   weatherByLocation();
 }
@@ -323,16 +341,20 @@ function Card(dayData) {
     optionContent.innerHTML = "";
     optionContent.className = "detail";
     let table = document.createElement("table");
-    let tblHeader = document.createElement("tr");
-    tblHeader.innerHTML = `<th>Hour</th><th>Condition</th><th>Chance of rain</th><th>Temperature</th>`;
+    let tblHeader = document.createElement("thead");
+    tblHeader.innerHTML = `<thead><tr><th>Hour</th><th>Condition</th><th>Chance of rain</th><th>Precipitation</th><th>Temperature</th></tr></thead>`;
     table.append(tblHeader);
 
     let html = "";
     dayData.hour.forEach(function (hour) {
       html += `<tr>
       <th>${new Date(hour.time).getHours()}</th>
-      <th><img src="${hour.condition.icon}"></th>
-      <th>${hour.chance_of_rain} %</th>`;
+      <th>
+      <div>${hour.condition.text}</div>
+      <div><img src="${hour.condition.icon}"></th></div>
+      <th>${hour.chance_of_rain} %</th>
+      <th>${hour.precip_mm} mm</th>
+      `;
 
       if (units == "C") {
         html += `
