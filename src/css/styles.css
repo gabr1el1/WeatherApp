@@ -161,7 +161,38 @@ body.night.shower {
   --secondary-color: rgba(0, 0, 128, 0.775);
   background: url(../images/night-rain.jpeg);
 }
-
+/*Snow*/
+body.day.snow {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/snow-day.jpeg);
+}
+body.sunset.snow {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/snow-sunset.jpg);
+}
+body.night.snow {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/snow-night.jpeg);
+}
+/*Sleet*/
+body.day.sleet {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/sleet-day.jpg);
+}
+body.sunset.sleet {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/sleet-sunset.jpg);
+}
+body.night.sleet {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/sleet-night.jpg);
+}
 /*
 TODO: add more classes for more conditions
 */
@@ -271,7 +302,7 @@ header h1 {
 
 #card-content {
   flex: 12;
-  background: var(--main-color);
+  color: white;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -356,6 +387,7 @@ header h1 {
   gap: 5px;
 }
 .search-weather input[type="text"] {
+  color: white;
   flex: 8;
   font-size: 1.3rem;
   padding: 5px;
@@ -395,6 +427,7 @@ header h1 {
 }
 table {
   flex: 1;
+  color: white;
 }
 table tr {
   display: flex;
@@ -405,7 +438,6 @@ table th {
 }
 
 table thead th {
-  padding-bottom: 10px;
   background: grey;
   color: white;
 }
@@ -417,4 +449,10 @@ table tr th {
   align-items: center;
   flex-direction: column;
   border-bottom: medium solid white;
+}
+table tbody th {
+  background: var(--base-color);
+}
+footer {
+  color: white;
 }

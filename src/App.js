@@ -96,10 +96,6 @@ function WeatherApp() {
       data = await requestWeather(currentLocation);
       locationInput.value = data.location.name;
       displayGraphics(data);
-
-      console.log(coord);
-      console.log(hour);
-      console.log(data);
     }
 
     getLocation();
@@ -175,7 +171,7 @@ function WeatherApp() {
   async function changeStyles() {
     document.body.className = "";
     hourWeatherText = hourWeatherText.toLowerCase();
-    
+
     if (dayLight) {
       document.body.classList.add("day");
     } else if (!dayLight) {
@@ -184,49 +180,51 @@ function WeatherApp() {
       document.body.classList.add("sunset");
     }
 
-    
-    if(hourWeatherText=="clear"){
+    if (hourWeatherText == "clear") {
       document.body.classList.add("clear");
     }
-    if(hourWeatherText=="sunny"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "sunny") {
+      document.body.classList.add("sunny");
     }
-    if(hourWeatherText=="cloudy"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "cloudy") {
+      document.body.classList.add("cloudy");
     }
-    if(hourWeatherText=="partly cloudy"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "partly cloudy") {
+      document.body.classList.add("partly-cloudy");
     }
-    if(hourWeatherText=="mist"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "mist") {
+      document.body.classList.add("mist");
     }
-    if(hourWeatherText=="overcast"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "overcast") {
+      document.body.classList.add("overcast");
     }
-    if(hourWeatherText=="fog"){
-      document.body.classList.add("clear");
+    if (hourWeatherText == "fog") {
+      document.body.classList.add("fog");
     }
 
-    if(hourWeatherText.includes("rain")){
+    if (hourWeatherText.includes("rain")) {
       document.body.classList.add("rain");
     }
 
-    if(hourWeatherText.includes("shower")){
+    if (hourWeatherText.includes("shower")) {
       document.body.classList.add("shower");
     }
 
-    if(hourWeatherText.includes("thunder")){
+    if (hourWeatherText.includes("thunder")) {
       document.body.classList.add("thunder");
     }
-        
-     
+
+    if (hourWeatherText.includes("snow")) {
+      document.body.classList.add("snow");
     }
+
+    if (hourWeatherText.includes("sleet")) {
+      document.body.classList.add("sleet");
+    }
+
     document.querySelector("#icon-weather").src = hourWeatherIcon;
-
-
-
-
   }
+
   function startInterval() {
     setInterval(function () {
       let d = new Date();
@@ -272,7 +270,7 @@ function WeatherApp() {
 
       if (minute12Locale == 0 && second12Locale == 0) {
         cardsDays[0].dayData.hour = cardsDays[0].dayData.hour.slice(1);
-        hourWeatherText = cardsDays[activeCard];
+        hourWeatherText = cardsDays[0].dayData.hour[0].condition.text;
         refreshGraphics();
       }
 
@@ -301,9 +299,6 @@ function WeatherApp() {
       changeStyles();
 
       document.querySelector("span.hour").innerText = `${time12Locale}`;
-      //console.log(sunset24Parts);
-      //console.log(`$Daylight: ${dayLight}`);
-      //console.log(`$Sunset: ${isSunset}`);
     }, 1000);
   }
 
