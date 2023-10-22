@@ -4,9 +4,11 @@
   box-sizing: border-box;
 }
 :root {
-  --main-color: rgb(189, 205, 221);
-  --option-color: rgb(120, 182, 245);
+  --base-color: rgb(189, 205, 221);
+  --main-color: rgb(120, 182, 245);
+  --secondary-color: rgba(120, 183, 245, 0.822);
 }
+
 body,
 html {
   min-width: 100vw;
@@ -24,23 +26,140 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-body.overcast {
-  background-image: url(../images/overcast.webp);
+/*https://www.weatherapi.com/docs/weather_conditions.json/ */
+/*code 1000*: */
+body.day.sunny {
+  --main-color: gold;
+  --secondary-color: rgba(249, 213, 9, 0.775);
+  background: url(../images/sunny.webp);
 }
-
-body.sunny {
-  background-image: url(../images/sunny.webp);
+body.sunset.sunny {
+  --main-color: gold;
+  --secondary-color: rgba(249, 213, 9, 0.775);
+  background: url(../images/clear_sunset.webp);
 }
-body.partly-cloudy {
-  background: lightsteelblue;
+body.night.clear {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/clear-night.jpg);
 }
-body.cloudy {
-  background-image: url(../images/cloudy.jpg);
+/*code 1003*: */
+body.day.partly-cloudy {
+  --main-color: rgb(146, 195, 214);
+  --secondary-color: rgba(146, 195, 214, 0.775);
+  background: url(../images/partly-cloudy.jpg);
 }
-
-body.patchy-rain-possible {
-  background-image: url(../images/patcy-rain.jpeg);
+body.sunset.partly-cloudy {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/partly-cloudy-sunset.jpg);
+}
+body.night.partly-cloudy {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/partly-cloudy-night.jpg);
+}
+/*code 1006*: */
+body.day.cloudy {
+  --main-color: rgb(146, 195, 214);
+  --secondary-color: rgba(146, 195, 214, 0.775);
+  background: url(../images/cloudy-day.webp);
+}
+body.sunset.cloudy {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/cloudy-sunset.jpg);
+}
+body.night.cloudy {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/cloudy-night.jpg);
+}
+/*Code 1009*/
+body.day.overcast {
+  --main-color: rgb(146, 195, 214);
+  --secondary-color: rgba(146, 195, 214, 0.775);
+  background: url(../images/overcast-day.webp);
+}
+body.sunset.overcast {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/overcast-sunset.jpg);
+}
+body.night.overcast {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/overcast-night.jpg);
+}
+/*Code 1030*/
+body.day.mist {
+  --main-color: steelblue;
+  --secondary-color: rgba(70, 131, 180, 0.775);
+  background: url(../images/mist-day.jpg);
+}
+body.sunset.mist {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/sunset-mist.jpg);
+}
+body.night.mist {
+  --main-color: darkslateblue;
+  --secondary-color: rgba(71, 61, 139, 0.775);
+  background: url(../images/night-mist.jpeg);
+}
+/*Code 1135*/
+body.day.fog {
+  --main-color: steelblue;
+  --secondary-color: rgba(70, 131, 180, 0.775);
+  background: url(../images/fog-day.jpg);
+}
+body.sunset.fog {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/fog-sunset.jpg);
+}
+body.night.fog {
+  --main-color: darkslateblue;
+  --secondary-color: rgba(71, 61, 139, 0.775);
+  background: url(../images/fog-night.jpeg);
+}
+/* Rain*/
+body.day.rain {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/rain-day.jpg);
+}
+body.sunset.rain {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/rain-sunset.jpg);
+}
+body.night.rain {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/night-rain.jpeg);
+}
+/**/
+body.thunder {
+  --main-color: rgb(64, 0, 128);
+  --secondary-color: rgba(64, 0, 128, 0.775);
+  background: url(../images/thundery.jpg);
+}
+/*Shower*/
+body.day.shower {
+  --main-color: orangered;
+  --secondary-color: rgb(218, 68, 14, 775);
+  background: url(../images/shower-day.jpeg);
+}
+body.sunset.shower {
+  --main-color: rgb(241, 186, 82);
+  --secondary-color: rgba(241, 185, 82, 0.775);
+  background: url(../images/rain-sunset.jpg);
+}
+body.night.shower {
+  --main-color: navy;
+  --secondary-color: rgba(0, 0, 128, 0.775);
+  background: url(../images/night-rain.jpeg);
 }
 
 /*
@@ -53,6 +172,7 @@ header {
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
+  color: white;
 }
 
 header h1 {
@@ -72,7 +192,7 @@ header h1 {
 }
 
 .switch {
-  background: lightgray;
+  background: var(--base-color);
   flex: 1;
   max-width: 50px;
   min-width: 50px;
@@ -86,13 +206,22 @@ header h1 {
   height: 10px;
   background: white;
   border-radius: 100%;
-  background: slateblue;
+  background: var(--base-color);
+  transition: all 0.3s ease;
+  left: 0;
+}
+
+.switch-toggle {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: var(--main-color);
   transition: all 0.3s ease;
   left: 0;
 }
 
 .switch-toggle.active {
-  background: greenyellow;
   left: 70%;
 }
 
@@ -126,23 +255,23 @@ header h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: lightgray;
+  background: var(--base-color);
   color: white;
 }
 
 #bar-days > .weather-day:hover {
-  background: var(--main-color);
+  background: var(--secondary-color);
   transition: all 0.5s ease;
 }
 
 #bar-days > .weather-day.selected-day {
-  background: var(--option-color);
+  background: var(--main-color);
   transition: all 0.5s ease;
 }
 
 #card-content {
   flex: 12;
-  background: lightgray;
+  background: var(--main-color);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -159,7 +288,7 @@ header h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--main-color);
+  background: var(--base-color);
   transition: all 0.5s ease;
   color: white;
 }
@@ -168,13 +297,18 @@ header h1 {
   border-radius: 5px 0 0 0;
 }
 
+#general-opt:hover,
+#detail-opt:hover {
+  background: var(--secondary-color);
+}
+
 #detail-opt {
   border-radius: 0 5px 0 0;
 }
 
 #general-opt.active,
 #detail-opt.active {
-  background: var(--option-color);
+  background: var(--main-color);
 }
 
 #option-content {
@@ -227,7 +361,7 @@ header h1 {
   padding: 5px;
   border-radius: 5px;
   border: none;
-  background: lightgrey;
+  background: var(--main-color);
   transition: all 0.5s ease;
   outline: none;
 }

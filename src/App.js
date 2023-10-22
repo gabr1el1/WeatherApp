@@ -13,15 +13,17 @@ function WeatherApp() {
     longitude,
     tmZn,
     hourWeatherText,
+    dayLight,
+    isSunset,
+    sunsetStr,
     hourWeatherIcon,
     activeCard,
     tempUnits,
-    sunriseStr,
     hourSunrise,
     minuteSunrise,
-    sunsetStr,
     hourSunset,
     minuteSunset,
+    currentLocation,
     cardsDays = [];
   //DOM
   let hourTag = document.querySelector(".hour");
@@ -58,7 +60,8 @@ function WeatherApp() {
   userLocBtn.addEventListener("click", weatherByLocation);
   locationInput.addEventListener("keyup", async function (e) {
     if (e.key == "Enter") {
-      data = await requestWeather(locationInput.value);
+      currentLocation = locationInput.value;
+      data = await requestWeather(currentLocation);
       hour = new Date(data.location.localtime).getHours();
       displayGraphics();
 
@@ -80,6 +83,7 @@ function WeatherApp() {
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
       let coord = `${latitude},${longitude}`;
+      currentLocation = coord;
       /*
       timeZone = await fetch(
         `http://api.geonames.org/timezoneJSON?lat=${latitude}&lng=${longitude}&username=gabrielhg`,
@@ -89,8 +93,7 @@ function WeatherApp() {
       timeZone = timeZone.gmtOffset;
       */
       hour = new Date().getHours();
-
-      data = await requestWeather(coord);
+      data = await requestWeather(currentLocation);
       locationInput.value = data.location.name;
       displayGraphics(data);
 
@@ -106,15 +109,11 @@ function WeatherApp() {
     try {
       data = await getWeather(location, 3);
       tmZn = data.location.tz_id;
-      sunriseStr = data.forecast.forecastday[0].astro.sunrise.split(":");
-      hourSunrise = parseInt(sunriseStr[0]);
-      minuteSunrise = parseInt(sunriseStr[1]);
-      sunsetStr = data.forecast.forecastday[0].astro.sunset.split(":");
-      hourSunset = parseInt(sunsetStr[0]);
-      minuteSunset = parseInt(sunsetStr[1]);
-
+      sunsetStr = data.forecast.forecastday[0].astro.sunset;
       console.log(`sunrise ${hourSunrise} : ${minuteSunrise}`);
       console.log(`sunset ${hourSunset} : ${minuteSunset}`);
+      startInterval();
+      console.log(data);
       return data;
     } catch (error) {
       alert(error.message);
@@ -154,7 +153,7 @@ function WeatherApp() {
         day.classList.add("selected-day");
         activeCard = 0;
         cardsDays[activeCard].addContent(tempUnits);
-        changeBackground();
+        changeStyles();
       }
       day.addEventListener("click", function () {
         Array.from(document.querySelectorAll(".weather-day"))[
@@ -163,7 +162,7 @@ function WeatherApp() {
         day.classList.add("selected-day");
         activeCard = index;
         cardsDays[activeCard].addContent(tempUnits);
-        changeBackground();
+        changeStyles();
       });
       barDays.append(day);
     });
@@ -173,52 +172,141 @@ function WeatherApp() {
     cardsDays[activeCard].addContent(tempUnits);
   }
 
-  function changeBackground() {
-    if (hourWeatherText == "Partly cloudy") {
-      document.body.className = "partly-cloudy";
-    } else if (hourWeatherText == "Sunny") {
-      document.body.className = "sunny";
-    } else if (hourWeatherText == "Overcast") {
-      document.body.className = "overcast";
-    } else if (hourWeatherText == "Clear") {
-      document.body.className = "clear";
-    } else if (hourWeatherText == "Patchy rain possible") {
-      document.body.className = "patchy-rain-possible";
-    } else if (hourWeatherText == "Cloudy") {
-      document.body.className = "cloudy";
+  async function changeStyles() {
+    document.body.className = "";
+    hourWeatherText = hourWeatherText.toLowerCase();
+    
+    if (dayLight) {
+      document.body.classList.add("day");
+    } else if (!dayLight) {
+      document.body.classList.add("night");
+    } else if (isSunset) {
+      document.body.classList.add("sunset");
+    }
+
+    
+    if(hourWeatherText=="clear"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="sunny"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="cloudy"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="partly cloudy"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="mist"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="overcast"){
+      document.body.classList.add("clear");
+    }
+    if(hourWeatherText=="fog"){
+      document.body.classList.add("clear");
+    }
+
+    if(hourWeatherText.includes("rain")){
+      document.body.classList.add("rain");
+    }
+
+    if(hourWeatherText.includes("shower")){
+      document.body.classList.add("shower");
+    }
+
+    if(hourWeatherText.includes("thunder")){
+      document.body.classList.add("thunder");
+    }
+        
+     
     }
     document.querySelector("#icon-weather").src = hourWeatherIcon;
+
+
+
+
+  }
+  function startInterval() {
+    setInterval(function () {
+      let d = new Date();
+      let time12Locale = `${d.toLocaleString("en-US", {
+        timeZone: tmZn,
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      })}`;
+
+      let time24Locale = `${d.toLocaleString("en-US", {
+        timeZone: tmZn,
+        hour12: false,
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      })}`;
+
+      let time12Parts = time12Locale.split(":").map(function (hourPart) {
+        return parseInt(hourPart);
+      });
+
+      let time24Parts = time24Locale.split(":").map(function (hourPart) {
+        return parseInt(hourPart);
+      });
+
+      let sunset24Parts = sunsetStr.split(":");
+      sunset24Parts[0] = parseInt(sunset24Parts[0]);
+      sunset24Parts.push(sunset24Parts[1].split(" ")[1]);
+      sunset24Parts[1] = parseInt(sunset24Parts[1].split(" ")[0]);
+
+      let hour12Locale = time12Parts[0];
+      let minute12Locale = time12Parts[1];
+      let second12Locale = time12Parts[2];
+
+      let hour24Locale = time24Parts[0];
+      let minute24Locale = time24Parts[1];
+      let second24Locale = time24Parts[2];
+
+      let hourSunset24Locale = sunset24Parts[0] + 12;
+      let minuteSunset24Locale = sunset24Parts[1];
+      let secondSunset24Locale = sunset24Parts[2];
+
+      if (minute12Locale == 0 && second12Locale == 0) {
+        cardsDays[0].dayData.hour = cardsDays[0].dayData.hour.slice(1);
+        hourWeatherText = cardsDays[activeCard];
+        refreshGraphics();
+      }
+
+      if (hour12Locale == 23 && minute12Locale == 59 && second12Locale == 59) {
+        requestWeather(currentLocation);
+      }
+
+      let isDay = cardsDays[0].dayData.hour[0].is_day;
+      if (isDay) {
+        if (
+          isDay &&
+          hour24Locale == hourSunset24Locale &&
+          minute24Locale >= minuteSunset24Locale
+        ) {
+          isSunset = true;
+          dayLight = false;
+        } else {
+          isSunset = false;
+          dayLight = true;
+        }
+      } else {
+        dayLight = false;
+        isSunset = false;
+      }
+
+      changeStyles();
+
+      document.querySelector("span.hour").innerText = `${time12Locale}`;
+      //console.log(sunset24Parts);
+      //console.log(`$Daylight: ${dayLight}`);
+      //console.log(`$Sunset: ${isSunset}`);
+    }, 1000);
   }
 
-  setInterval(function () {
-    let d = new Date();
-    let timeLocale = `${d.toLocaleString("en-US", {
-      timeZone: tmZn,
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    })}`;
-    let timeParts = timeLocale.split(":").map(function (hourPart) {
-      return parseInt(hourPart);
-    });
-
-    let hourLocale = timeParts[0];
-    let minuteLocale = timeParts[1];
-    let secondLocale = timeParts[2];
-
-    if (minuteLocale == 0 && secondLocale == 0) {
-      cardsDays[0].dayData.hour = cardsDays[0].dayData.hour.slice(1);
-      hourWeatherText = cardsDays[activeCard];
-      refreshGraphics();
-      changeBackground();
-    }
-
-    if (hourLocale == 23 && minuteLocale == 59 && secondLocale == 59) {
-      requestWeather();
-    }
-    hourTag.innerText = timeLocale;
-    //console.log(`${minuteLocale} : ${secondLocale}`);
-  }, 1000);
   weatherByLocation();
 }
 
@@ -348,7 +436,17 @@ function Card(dayData) {
     let html = "";
     dayData.hour.forEach(function (hour) {
       html += `<tr>
-      <th>${new Date(hour.time).getHours()}</th>
+      <th>${(function () {
+        let hourWthr = new Date(hour.time).getHours();
+        if (hourWthr == 0) {
+          hourWthr = `12 AM`;
+        } else if (hourWthr == 12) {
+          hourWthr = `12 PM`;
+        } else {
+          hourWthr = hourWthr >= 12 ? `${hourWthr % 12} PM` : `${hourWthr} AM`;
+        }
+        return hourWthr;
+      })()}</th>
       <th>
       <div>${hour.condition.text}</div>
       <div><img src="${hour.condition.icon}"></th></div>
