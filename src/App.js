@@ -97,7 +97,7 @@ function WeatherApp() {
       locationInput.value = data.location.name;
       displayGraphics(data);
     }
-
+    //
     getLocation();
   }
 
