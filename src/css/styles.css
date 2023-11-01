@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  user-select: none;
 }
 :root {
   --base-color: rgb(189, 205, 221);
@@ -9,11 +10,9 @@
   --secondary-color: rgba(120, 183, 245, 0.822);
 }
 
-body,
-html {
-  min-width: 100vw;
+html,body{
   min-height: 100vh;
-  user-select: none;
+  min-width: 100vw;
 }
 
 body {
@@ -22,7 +21,7 @@ body {
   gap: 10px;
   padding: 20px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background: floralwhite;
+  background-color: floralwhite;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -31,167 +30,167 @@ body {
 body.day.sunny {
   --main-color: gold;
   --secondary-color: rgba(249, 213, 9, 0.775);
-  background: url(../images/sunny.webp);
+  background-image: url(../images/sunny.webp);
 }
 body.sunset.sunny {
   --main-color: gold;
   --secondary-color: rgba(249, 213, 9, 0.775);
-  background: url(../images/clear_sunset.webp);
+  background-image: url(../images/clear_sunset.webp);
 }
 body.night.clear {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/clear-night.jpg);
+  background-image: url(../images/clear-night.jpg);
 }
 /*code 1003*: */
 body.day.partly-cloudy {
   --main-color: rgb(146, 195, 214);
   --secondary-color: rgba(146, 195, 214, 0.775);
-  background: url(../images/partly-cloudy.jpg);
+  background-image: url(../images/partly-cloudy.jpg);
 }
 body.sunset.partly-cloudy {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/partly-cloudy-sunset.jpg);
+  background-image: url(../images/partly-cloudy-sunset.jpg);
 }
 body.night.partly-cloudy {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/partly-cloudy-night.jpg);
+  background-image: url(../images/partly-cloudy-night.jpg);
 }
 /*code 1006*: */
 body.day.cloudy {
   --main-color: rgb(146, 195, 214);
   --secondary-color: rgba(146, 195, 214, 0.775);
-  background: url(../images/cloudy-day.webp);
+  background-image: url(../images/cloudy-day.webp);
 }
 body.sunset.cloudy {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/cloudy-sunset.jpg);
+  background-image: url(../images/cloudy-sunset.jpg);
 }
 body.night.cloudy {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/cloudy-night.jpg);
+  background-image: url(../images/cloudy-night.jpg);
 }
 /*Code 1009*/
 body.day.overcast {
   --main-color: rgb(146, 195, 214);
   --secondary-color: rgba(146, 195, 214, 0.775);
-  background: url(../images/overcast-day.webp);
+  background-image: url(../images/overcast-day.webp);
 }
 body.sunset.overcast {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/overcast-sunset.jpg);
+  background-image: url(../images/overcast-sunset.jpg);
 }
 body.night.overcast {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/overcast-night.jpg);
+  background-image: url(../images/overcast-night.jpg);
 }
 /*Code 1030*/
 body.day.mist {
   --main-color: steelblue;
   --secondary-color: rgba(70, 131, 180, 0.775);
-  background: url(../images/mist-day.jpg);
+  background-image: url(../images/mist-day.jpg);
 }
 body.sunset.mist {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/sunset-mist.jpg);
+  background-image: url(../images/sunset-mist.jpg);
 }
 body.night.mist {
   --main-color: darkslateblue;
   --secondary-color: rgba(71, 61, 139, 0.775);
-  background: url(../images/night-mist.jpeg);
+  background-image: url(../images/night-mist.jpeg);
 }
 /*Code 1135*/
 body.day.fog {
   --main-color: steelblue;
   --secondary-color: rgba(70, 131, 180, 0.775);
-  background: url(../images/fog-day.jpg);
+  background-image: url(../images/fog-day.jpg);
 }
 body.sunset.fog {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/fog-sunset.jpg);
+  background-image: url(../images/fog-sunset.jpg);
 }
 body.night.fog {
   --main-color: darkslateblue;
   --secondary-color: rgba(71, 61, 139, 0.775);
-  background: url(../images/fog-night.jpeg);
+  background-image: url(../images/fog-night.jpeg);
 }
 /* Rain*/
 body.day.rain {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/rain-day.jpg);
+  background-image: url(../images/rain-day.jpg);
 }
 body.sunset.rain {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/rain-sunset.jpg);
+  background-image: url(../images/rain-sunset.jpg);
 }
 body.night.rain {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/night-rain.jpeg);
+  background-image: url(../images/night-rain.jpeg);
 }
 /**/
 body.thunder {
   --main-color: rgb(64, 0, 128);
   --secondary-color: rgba(64, 0, 128, 0.775);
-  background: url(../images/thundery.jpg);
+  background-image: url(../images/thundery.jpg);
 }
 /*Shower*/
 body.day.shower {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/shower-day.jpeg);
+  background-image: url(../images/shower-day.jpeg);
 }
 body.sunset.shower {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/rain-sunset.jpg);
+  background-image: url(../images/rain-sunset.jpg);
 }
 body.night.shower {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/night-rain.jpeg);
+  background-image: url(../images/night-rain.jpeg);
 }
 /*Snow*/
 body.day.snow {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/snow-day.jpeg);
+  background-image: url(../images/snow-day.jpeg);
 }
 body.sunset.snow {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/snow-sunset.jpg);
+  background-image: url(../images/snow-sunset.jpg);
 }
 body.night.snow {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/snow-night.jpeg);
+  background-image: url(../images/snow-night.jpeg);
 }
 /*Sleet*/
 body.day.sleet {
   --main-color: orangered;
   --secondary-color: rgb(218, 68, 14, 775);
-  background: url(../images/sleet-day.jpg);
+  background-image: url(../images/sleet-day.jpg);
 }
 body.sunset.sleet {
   --main-color: rgb(241, 186, 82);
   --secondary-color: rgba(241, 185, 82, 0.775);
-  background: url(../images/sleet-sunset.jpg);
+  background-image: url(../images/sleet-sunset.jpg);
 }
 body.night.sleet {
   --main-color: navy;
   --secondary-color: rgba(0, 0, 128, 0.775);
-  background: url(../images/sleet-night.jpg);
+  background-image: url(../images/sleet-night.jpg);
 }
 /*
 TODO: add more classes for more conditions
@@ -301,6 +300,7 @@ header h1 {
 }
 
 #card-content {
+  width: 100%;
   flex: 12;
   color: white;
   border-radius: 5px;
